@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<plugin xmlns="http://www.phonegap.com/ns/plugins/1.0"
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        id="de.appplant.cordova.plugin.printer"
+        version="0.7.1-dev">
+
+    <name>Printer</name>
+
+    <description>
+        Cordova plugin to print HTML documents using Portable BlueTooth Printer.
+    </description>
+
+    <repo>
+        https://github.com/envisiondata/cordova-plugin-starprinter.git
+    </repo>
+
+    <!--<keywords>
+        print, printer, ios, android, google cloud, air print
+    </keywords>-->
+
+    <license>Apache 2.0</license>
+
+    <author>James Vaught</author>
+
+    <!-- cordova -->
+    <engines>
+        <engine name="cordova" version=">=3.0.0" />
+    </engines>
+
+    <!-- interface -->
+    <js-module src="www/starprinter.js" name="StarPrinter">
+        <clobbers target="plugin.printer" />
+        <clobbers target="cordova.plugins.printer" />
+    </js-module>
+
+    <!-- ios 
+    <platform name="ios">
+        <config-file target="config.xml" parent="/*">
+            <feature name="Printer">
+                <param name="ios-package" value="APPStarPrinter"/>
+            </feature>
+        </config-file>
+
+        <header-file src="src/ios/APPStarPrinter.h" />
+        <source-file src="src/ios/APPStarPrinter.m" />
+
+    </platform>-->
+
+    <!-- android -->
+    <platform name="android">
+        <config-file target="res/xml/config.xml" parent="/*">
+            <feature name="StarPrinter">
+                <param name="android-package" value="com.star.printer"/>
+            </feature>
+        </config-file>
+
+        <source-file src="src/android/StarPrinter.java" target-dir="src/com/star/printer" />
+		<source-file src="src/android/StarIOPort3.1.jar" target-dir="libs" />
+    </platform>
+</plugin>
