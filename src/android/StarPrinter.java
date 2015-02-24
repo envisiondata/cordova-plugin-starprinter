@@ -23,6 +23,7 @@ import java.io.UnsupportedEncodingException;
 import java.text.NumberFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -38,6 +39,9 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import android.app.AlertDialog;
+import android.app.AlertDialog.Builder;
+import android.content.Context;
 import android.provider.Settings;
 
 public class StarPrinter extends CordovaPlugin {
@@ -50,8 +54,6 @@ public class StarPrinter extends CordovaPlugin {
 
     public Boolean trackerStarted = false;
     public Boolean debugModeEnabled = false;
-    public HashMap<String, String> customDimensions = new HashMap<String, String>();
-
     /**
      * Constructor.
      */
@@ -78,7 +80,7 @@ public class StarPrinter extends CordovaPlugin {
      * @return                  True if the action was valid, false if not.
      */
     public boolean execute(String action, JSONArray args, CallbackContext callbackContext) throws JSONException {
-        if (START_TRACKER.equals(action)) {
+        if (PRINTRECEIPT.equals(action)) {
             //JSONObject r = new JSONObject();
             //r.put("uuid", Device.uuid);
             //r.put("version", this.getOSVersion());
@@ -88,9 +90,9 @@ public class StarPrinter extends CordovaPlugin {
             //callbackContext.success(r);
         }
 		else if (CHECKSTATUS.equals(action)){
-            JSONObject r = new JSONObject();
-            r.put("Check Status", StarPrinter.CheckStatus(callbackContext, "BT:???", "mini");
-            callbackContext.success(r);			
+            Context context=this.cordova.getActivity().getApplicationContext();
+            StarPrinter.CheckStatus(context, "BT:???", "mini");
+            callbackContext.success();			
 		}
         else {
             return false;
@@ -195,22 +197,6 @@ public class StarPrinter extends CordovaPlugin {
 	 
 	 
 	 /**
-     * Get the OS name.
-     * 
-     * @return
-     */
-	 
-    public String getPlatform() {
-        String platform;
-        if (isAmazonDevice()) {
-            platform = AMAZON_PLATFORM;
-        } else {
-            platform = ANDROID_PLATFORM;
-        }
-        return platform;
-    }
-
-    /**
      * Get the device's Universally Unique Identifier (UUID).
      *
      * @return
@@ -253,18 +239,6 @@ public class StarPrinter extends CordovaPlugin {
     public String getTimeZoneID() {
         TimeZone tz = TimeZone.getDefault();
         return (tz.getID());
-    }
-
-    /**
-     * Function to check if the device is manufactured by Amazon
-     * 
-     * @return
-     */
-    public boolean isAmazonDevice() {
-        if (android.os.Build.MANUFACTURER.equals(AMAZON_DEVICE)) {
-            return true;
-        }
-        return false;
     }
 
 }
