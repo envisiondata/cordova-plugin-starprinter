@@ -16,7 +16,7 @@
        specific language governing permissions and limitations
        under the License.
 */
-package org.apache.cordova.device;
+package com.star.printer;
 
 import java.util.TimeZone;
 import java.io.UnsupportedEncodingException;
