@@ -34,24 +34,24 @@
         <clobbers target="cordova.plugins.printer" />
     </js-module>
 
-    <!-- ios 
+    ios 
     <platform name="ios">
         <config-file target="config.xml" parent="/*">
-            <feature name="Printer">
-                <param name="ios-package" value="APPStarPrinter"/>
+            <feature name="StarPrinter">
+                <param name="ios-package" value="MyPrinter"/>
             </feature>
         </config-file>
 
-        <header-file src="src/ios/APPStarPrinter.h" />
-        <source-file src="src/ios/APPStarPrinter.m" />
+        <header-file src="src/ios/MyPrinter.h" />
+        <source-file src="src/ios/MyPrinter.m" />
 
-    </platform>-->
+    </platform>
 
     <!-- android -->
     <platform name="android">
         <config-file target="res/xml/config.xml" parent="/*">
             <feature name="StarPrinter">
-                <param name="android-package" value="com.star.printer"/>
+                <param name="android-package" value="com.star.printer.StarPrinter"/>
             </feature>
         </config-file>
 
