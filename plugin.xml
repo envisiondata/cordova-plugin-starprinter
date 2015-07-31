@@ -3,21 +3,20 @@
 <plugin xmlns="http://www.phonegap.com/ns/plugins/1.0"
         xmlns:android="http://schemas.android.com/apk/res/android"
         id="com.star.printer"
-        version="0.0.1-dev">
+        version="0.0.1">
 
     <name>Printer</name>
-
     <description>
-        Cordova plugin to print HTML documents using Portable BlueTooth Printer.
+        Cordova plugin to print using Star Portable BlueTooth Printer.
     </description>
 
     <repo>
         https://github.com/envisiondata/cordova-plugin-starprinter.git
     </repo>
 
-    <!--<keywords>
-        print, printer, ios, android, google cloud, air print
-    </keywords>-->
+    <keywords>
+		Star Printer, iOS, android
+    </keywords>
 
     <license>Apache 2.0</license>
 
@@ -34,18 +33,29 @@
         <clobbers target="cordova.plugins.printer" />
     </js-module>
 
-    <!-- ios 
+    <!-- ios -->
     <platform name="ios">
         <config-file target="config.xml" parent="/*">
             <feature name="Printer">
-                <param name="ios-package" value="APPStarPrinter"/>
+                <param name="ios-package" value="StarPrinter"/>
             </feature>
         </config-file>
 
-        <header-file src="src/ios/APPStarPrinter.h" />
-        <source-file src="src/ios/APPStarPrinter.m" />
+        <header-file src="src/ios/CommonEnum.h" />
+        <header-file src="src/ios/MiniPrinterFunctions.h" />
+        <source-file src="src/ios/MiniPrinterFunctions.m" />		
+        <header-file src="src/ios/PrinterFunctions.h" />
+        <source-file src="src/ios/PrinterFunctions.m" />		
+        <header-file src="src/ios/SigGen.h" />
+        <source-file src="src/ios/SigGen.m" />		
+        <header-file src="src/ios/StarBitmap.h" />
+        <source-file src="src/ios/StarBitmap.m" />		
+        <header-file src="src/ios/StarPrinter.h" />
+        <source-file src="src/ios/StarPrinter.m" />
 
-    </platform>-->
+		<framework src="ios/StarIO.framework" />
+
+    </platform>
 
     <!-- android -->
     <platform name="android">
@@ -55,7 +65,10 @@
             </feature>
         </config-file>
 
-        <source-file src="src/android/StarPrinter.java" target-dir="src/com/star/printer" />
+        <source-file src="src/android/MiniPrinterFunctions.java" target-dir="src/com/star/printer" />
+		<source-file src="src/android/SigGen.java" target-dir="src/com/star/printer" />
+		<source-file src="src/android/StarBitmap.java" target-dir="src/com/star/printer" />
+		<source-file src="src/android/StarPrinter.java" target-dir="src/com/star/printer" />
 		<source-file src="src/android/StarIOPort3.1.jar" target-dir="libs" />
     </platform>
 </plugin>
