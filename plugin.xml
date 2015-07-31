@@ -33,24 +33,14 @@
         <clobbers target="cordova.plugins.printer" />
     </js-module>
 
-<<<<<<< .mine
     <!-- ios -->
-=======
-    ios 
->>>>>>> .theirs
     <platform name="ios">
         <config-file target="config.xml" parent="/*">
-<<<<<<< .mine
             <feature name="Printer">
                 <param name="ios-package" value="StarPrinter"/>
-=======
-            <feature name="StarPrinter">
-                <param name="ios-package" value="MyPrinter"/>
->>>>>>> .theirs
             </feature>
         </config-file>
 
-<<<<<<< .mine
         <header-file src="src/ios/CommonEnum.h" />
         <header-file src="src/ios/MiniPrinterFunctions.h" />
         <source-file src="src/ios/MiniPrinterFunctions.m" />		
@@ -62,25 +52,8 @@
         <source-file src="src/ios/StarBitmap.m" />		
         <header-file src="src/ios/StarPrinter.h" />
         <source-file src="src/ios/StarPrinter.m" />
-=======
-        <header-file src="src/ios/MyPrinter.h" />
-        <source-file src="src/ios/MyPrinter.m" />
 
-
-
-
-
-
-
-
-
->>>>>>> .theirs
-
-<<<<<<< .mine
 		<framework src="ios/StarIO.framework" />
-=======
-    </platform>
->>>>>>> .theirs
 
     </platform>
 
