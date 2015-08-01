@@ -267,7 +267,8 @@ typedef enum _SMLanguage {
 + (void)sendCommand:(NSData *)commandsToPrint
            portName:(NSString *)portName
        portSettings:(NSString *)portSettings
-      timeoutMillis:(u_int32_t)timeoutMillis;
+      timeoutMillis:(u_int32_t)timeoutMillis
+       errorMessage:(NSMutableString *)message;
 
 #pragma mark Bluetooth Setting
 

@@ -126,4 +126,10 @@ typedef enum {
                             paperWidth:(SMPaperWidth)printableWidth
                           errorMessage:(NSMutableString *)message;
 
++ (void)sendCommand:(NSData *)commandsToPrint
+           portName:(NSString *)portName
+       portSettings:(NSString *)portSettings
+      timeoutMillis:(u_int32_t)timeoutMillis
+       errorMessage:(NSMutableString *)message;
+
 @end

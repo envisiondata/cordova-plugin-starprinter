@@ -12,20 +12,10 @@
 	NSMutableDictionary *_customDimensions;
 }
 
+- (void) CheckStatus: (CDVInvokedUrlCommand*)command;
+- (void) CheckFirmwareVersion: (CDVInvokedUrlCommand*)command;
 - (void) PrintSampleReceipt: (CDVInvokedUrlCommand*)command;
-- (void) PrintInvoice: (CDVInvokedUrlCommand*)command;
-- (NSData *)english3inchSampleReceipt;
-- (void)sendCommand:(NSData *)commands
-           portName:(NSString *)portName
-       portSettings:(NSString *)portSettings
-      timeoutMillis:(u_int32_t)timeoutMillis
-       errorMessage:(NSMutableString *)message;
-- (NSString *) rightPadString:(NSString *)s
-                  withPadding:(NSString *)padding
-                   withLength:(NSUInteger *)length;
-- (NSString *) leftPadString:(NSString *)s
-                 withPadding:(NSString *)padding
-                  withLength:(int)length;
-- (UIImage *)getBlackAndWhiteVersionOfImage:(UIImage *)anImage; 
+- (void) PrintSignature: (CDVInvokedUrlCommand*)command;
+
 @end
 

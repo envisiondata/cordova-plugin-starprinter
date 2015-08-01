@@ -2842,7 +2842,7 @@
             
         case SMPaperWidth3inch:
 
-            [alert1 show];
+            //[alert1 show];
 
             commands = [self english3inchSampleReceipt];
             break;

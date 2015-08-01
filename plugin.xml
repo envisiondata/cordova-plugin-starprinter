@@ -36,7 +36,7 @@
     <!-- ios -->
     <platform name="ios">
         <config-file target="config.xml" parent="/*">
-            <feature name="Printer">
+            <feature name="StarPrinter">
                 <param name="ios-package" value="StarPrinter"/>
             </feature>
         </config-file>
@@ -52,8 +52,11 @@
         <source-file src="src/ios/StarBitmap.m" />		
         <header-file src="src/ios/StarPrinter.h" />
         <source-file src="src/ios/StarPrinter.m" />
+        <source-file src="src/ios/StarIO.framework" framework="true" />
 
-		<framework src="ios/StarIO.framework" />
+		<framework src="ExternalAccessory.framework" />
+        <framework src="CoreBluetooth.framework" />
+        <framework src="CoreGraphics.framework" />
 
     </platform>
 
