@@ -25,8 +25,8 @@
     <!-- cordova -->
     <engines>
         <engine name="cordova" version=">=3.0.0" />
+		<engine name="StarIO.framework" version="1.0.0" platform="ios" scriptSrc="src/ios/StarIO.framework"/>
     </engines>
-
     <!-- interface -->
     <js-module src="www/starprinter.js" name="StarPrinter">
         <clobbers target="plugin.printer" />
@@ -52,7 +52,6 @@
         <source-file src="src/ios/StarBitmap.m" />		
         <header-file src="src/ios/StarPrinter.h" />
         <source-file src="src/ios/StarPrinter.m" />
-        <source-file src="src/ios/StarIO.framework" framework="true" />
 
 		<framework src="ExternalAccessory.framework" />
         <framework src="CoreBluetooth.framework" />
@@ -67,8 +66,11 @@
                 <param name="android-package" value="com.star.printer.StarPrinter"/>
             </feature>
         </config-file>
-
-        <source-file src="src/android/MiniPrinterFunctions.java" target-dir="src/com/star/printer" />
+		
+        <config-file target="AndroidManifest.xml" parent="/manifest">
+            <uses-permission android:name="android.permission.BLUETOOTH" />
+        </config-file>
+		
 		<source-file src="src/android/SigGen.java" target-dir="src/com/star/printer" />
 		<source-file src="src/android/StarBitmap.java" target-dir="src/com/star/printer" />
 		<source-file src="src/android/StarPrinter.java" target-dir="src/com/star/printer" />

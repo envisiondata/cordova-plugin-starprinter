@@ -19,20 +19,11 @@
 package com.star.printer;
 
 import java.util.TimeZone;
-import java.io.ByteArrayInputStream;
 import java.io.IOException;
-import java.io.UnsupportedEncodingException;
-import java.nio.ByteBuffer;
-import java.nio.IntBuffer;
-import java.text.NumberFormat;
 import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Calendar;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import com.route.trax_news.R;
 import com.star.printer.StarBitmap;
 import com.starmicronics.stario.StarIOPort;
 import com.starmicronics.stario.StarIOPortException;
@@ -44,36 +35,21 @@ import org.apache.cordova.CordovaPlugin;
 import org.apache.cordova.CordovaInterface;
 import org.json.JSONArray;
 import org.json.JSONException;
-import org.json.JSONObject;
 
-import android.R.string;
 import android.app.AlertDialog;
 import android.app.AlertDialog.Builder;
 import android.content.Context;
-import android.content.Intent;
 import android.content.res.Resources;
 import android.graphics.Bitmap;
-import android.graphics.Bitmap.Config;
 import android.graphics.BitmapFactory;
-import android.graphics.Canvas;
-import android.graphics.Color;
-import android.graphics.ColorMatrix;
-import android.graphics.ColorMatrixColorFilter;
-import android.graphics.Paint;
-import android.graphics.drawable.Drawable;
-import android.graphics.drawable.PictureDrawable;
-import android.media.Image;
 import android.provider.Settings;
-import android.util.Base64;
 
 public class StarPrinter extends CordovaPlugin {
 
 	public static final String CHECKSTATUS = "CheckStatus";
-	public static final String PRINTRECEIPT = "PrintReceipt";
 	public static final String CHECKFIRMWARE = "CheckFirmwareVersion";
 	public static final String PRINTSAMPLERECEIPT = "PrintSampleReceipt";
-	public static final String PRINTINVOICE = "PrintInvoice";
-	public static final String PRINTIMAGE = "PrintImage";
+	public static final String PRINTSIGNATURE = "PrintSignature";
 
 	public static final String SET_USER_ID = "setUserId";
 	public static final String DEBUG_MODE = "debugMode";
@@ -106,53 +82,39 @@ public class StarPrinter extends CordovaPlugin {
 	 * 
 	 * @param action
 	 *            The action to execute.
-	 * @param args
+	 * @param arguments
 	 *            JSONArry of arguments for the plugin.
 	 * @param callbackContext
 	 *            The callback id used when calling back into JavaScript.
 	 * @return True if the action was valid, false if not.
 	 */
-	public boolean execute(String action, JSONArray args,
-			CallbackContext callbackContext) throws JSONException {
-
+	public boolean execute(String action, JSONArray arguments,
+            CallbackContext callbackContext) throws JSONException {
 		mContext = this.cordova.getActivity();
-		JSONObject arg_object = args.getJSONObject(0);
 
 		try {
-			if (PRINTRECEIPT.equals(action)) {
-				// JSONObject r = new JSONObject();
-				// r.put("uuid", Device.uuid);
-				// r.put("version", this.getOSVersion());
-				// r.put("platform", this.getPlatform());
-				// r.put("model", this.getModel());
-				// r.put("manufacturer", this.getManufacturer());
-				// callbackContext.success(r);
-			} else if (CHECKSTATUS.equals(action)) {
-
-				Context context = this.cordova.getActivity();// .getApplicationContext();
+			if (CHECKSTATUS.equals(action)) {
+				Context context = this.cordova.getActivity();
 				StarPrinter.CheckStatus(context, "BT:Star Micronics", "mini");
 				callbackContext.success();
 				return true;
 			} else if (CHECKFIRMWARE.equals(action)) {
 
-				Context context = this.cordova.getActivity();// .getApplicationContext();
+				Context context = this.cordova.getActivity();
 				StarPrinter.CheckFirmwareVersion(context, "BT:Star Micronics",
 						"mini");
 				callbackContext.success();
 				return true;
 			} else if (PRINTSAMPLERECEIPT.equals(action)) {
 
-				Context context = this.cordova.getActivity();// .getApplicationContext();
+				Context context = this.cordova.getActivity();
 				StarPrinter.PrintSampleReceipt(context, "BT:Star Micronics",
 						"mini", "3inch (80mm)");
 				callbackContext.success();
 				return true;
-			} else if (PRINTINVOICE.equals(action)) {
-				// ShowAlert("Print Invoice", "Calling the Method");
-				// ShowAlert("Invoice", arg_object.getString("invoice"));
-				// ShowAlert("Signature", arg_object.getString("sig"));
-				Context context = this.cordova.getActivity();// .getApplicationContext();
-				if(StarPrinter.PrintInvoice(context, "BT:Star Micronics", "mini", "3inch (80mm)", arg_object.getString("invoice"), arg_object.getString("sig"), arg_object.getString("invoiceDetail")) == true){
+			} else if (PRINTSIGNATURE.equals(action)) {
+				Context context = this.cordova.getActivity();		
+				if(StarPrinter.PrintSignature(context, "BT:Star Micronics", "mini", "3inch (80mm)", arguments.toString()) == true){
 					callbackContext.success();	
 					return true;
 				}
@@ -160,25 +122,7 @@ public class StarPrinter extends CordovaPlugin {
 
 					callbackContext.error("Printer error! Please reprint.");
 					return false;
-				}
-				
-			} else if (PRINTIMAGE.equals(action)) {
-
-				Context context = this.cordova.getActivity();// .getApplicationContext();
-
-				// Builder dialog = new AlertDialog.Builder(context);
-				// dialog.setNegativeButton("Ok", null);
-				// AlertDialog alert = dialog.create();
-				// alert.setTitle("PRINTIMAGE");
-				// alert.setMessage(args);
-				// alert.setCancelable(false);
-				// alert.show();
-
-				// args.replace("[", "").replace("\"", "").replace("]", "");
-				StarPrinter.PrintBitmap(context, "BT:Star Micronics", "mini",
-						arg_object.getString("sig"), 600, true, false);
-				callbackContext.success();
-				return true;
+				}				
 			}
 			callbackContext.error("Invalid action");
 			return false;
@@ -212,217 +156,20 @@ public class StarPrinter extends CordovaPlugin {
 	 *            Printable area size, This should be ("2inch (58mm)" or
 	 *            "3inch (80mm)")
 	 */
-	public static boolean PrintInvoice(Context context, String portName,
-			String portSettings, String strPrintArea, String invoiceArgs,
-			String sigArgs, String invoiceDetailArgs) {
+	public static boolean PrintSignature(Context context, String portName,
+			String portSettings, String strPrintArea, String sigArgs) {
 		ArrayList<byte[]> list = new ArrayList<byte[]>();
-		ArrayList<byte[]> list2 = new ArrayList<byte[]>();
-		ArrayList<byte[]> list3 = new ArrayList<byte[]>();
 		ArrayList<byte[]> al = new ArrayList<byte[]>();
 
 		if (strPrintArea.equals("3inch (80mm)")) {
 			byte[] outputByteBuffer = null;
 
-			list.add(new byte[] { 0x1d, 0x57, 0x40, 0x32 }); // Page Area
-																// Setting <GS>
-																// <W> nL nH (nL
-																// = 64, nH = 2)
 
-			list.add(new byte[] { 0x1b, 0x61, 0x01 }); // Center Justification
-														// <ESC> a n (0 Left, 1
-														// Center, 2 Right)
-
-			JSONObject jsonObject;
-			String InvoiceNumber = null;
-			String InvoiceDate = null;
-			String InvoiceTotal = null;
-			try {
-				jsonObject = new JSONObject(invoiceDetailArgs);
-				InvoiceNumber = jsonObject.getString("InvoiceNumber");
-				InvoiceDate = jsonObject.getString("InvoiceDate");
-				InvoiceTotal = jsonObject.getString("InvoiceTotal");
-			} catch (JSONException e2) {
-				// TODO Auto-generated catch block
-				e2.printStackTrace();
-				ShowAlert("Exception", e2.getMessage());
-			}
-
-			int HeaderRow = 0;
-			int ProductCount = 0;
-
-			// Convert All to JSONArray
-			JSONArray AllProducts = null;
-			try {
-				AllProducts = new JSONArray(invoiceArgs);
-			} catch (JSONException e1) {
-				list.add(("e1 " + e1.toString()).getBytes());
-				e1.printStackTrace();
-			}
-
-			outerloop:
-			// Loop through all products
-			for (int i = 0; i < AllProducts.length(); i++) {
-				// Each Product
-				ProductCount++;
-				try {
-					JSONArray Product = AllProducts.getJSONArray(i);
-
-					// Get Header
-					JSONObject jsonobjectHeader = Product.getJSONObject(0);
-					String name = "";
-					if (HeaderRow == 0) {
-						list.add(new byte[] { 0x1d, 0x21, 0x11 }); // Width and
-																	// Height
-																	// Character
-																	// Expansion
-																	// <GS> ! n
-						name = jsonobjectHeader.getString("LocationName")
-								+ jsonobjectHeader.getString("StoreNumber")
-								+ "\n";
-						list.add(name.toString().getBytes());
-						name = jsonobjectHeader.getString("Street1") + "\n";
-						list.add(name.toString().getBytes());
-						name = jsonobjectHeader.getString("City") + ", "
-								+ jsonobjectHeader.getString("State") + " "
-								+ jsonobjectHeader.getString("Zip") + "\n\n";
-						list.add(name.toString().getBytes());
-						list.add(new byte[] { 0x1d, 0x21, 0x00 }); // Cancel
-																	// Expansion
-						list.add(new byte[] { 0x1b, 0x61, 0x02 }); // Right
-						// Alignment
-						list.add(new byte[] { 0x1b, 0x45, 0x01 }); // Set Emphasized
-												// Printing ON
-						list.add(("Invoice Number:" + padLeft(InvoiceNumber, 15) + "\n")
-						.getBytes());
-						list.add(("Invoice Date:" + padLeft(InvoiceDate, 17) + "\n\n\n")
-						.getBytes());
-
-						HeaderRow++;
-					}
-
-
-					list.add(new byte[] { 0x1b, 0x61, 0x00 }); // Left Alignment
-					list.add(new byte[] { 0x1b, 0x45, 0x01 }); // Set Emphasized
-																// Printing ON
-					list.add(new byte[] { 0x1d, 0x21, 0x11 }); // Width and
-																// Height
-																// Character
-																// Expansion
-																// <GS> ! n
-					name = padRight(jsonobjectHeader.getString("ProductName"),
-							24);
-					list.add(name.toString().getBytes());
-					list.add(("\n").getBytes());
-
-					list.add(new byte[] { 0x1b, 0x45, 0x00 }); // Set Emphasized
-																// Printing OFF
-																// (same command
-																// as on)
-					list.add(new byte[] { 0x1d, 0x21, 0x00 }); // Cancel
-																// Expansion
-					list.add(new byte[] { 0x1b, 0x61, 0x01 }); // Center
-																// Justification
-																// <ESC> an (0
-																// Left, 1
-																// Center, 2
-																// Right)
-
-					list.add((padRight("Date", 9) + padRight("Edition", 15)
-							+ padLeft("In", 5) + padLeft("Out", 5)
-							+ padLeft("Price", 6) + padLeft("Total", 8) + "\n")
-							.getBytes());
-
-					for (int iLoop = 0; iLoop < Product.length(); iLoop++) {
-						JSONObject jsonobject;
-						try {
-							jsonobject = Product.getJSONObject(iLoop);
-
-							name = padRight(jsonobject.getString("10"), 9)
-									+ padRight(jsonobject.getString("9"), 15)
-									+ padLeft(
-											jsonobject.getString("QuantityIn"),
-											5)
-									+ padLeft(
-											jsonobject.getString("QuantityOut"),
-											5)
-									+ padLeft(jsonobject.getString("12"), 6)
-									+ padLeft(jsonobject.getString("15"), 8)
-									+ "\n";
-							list.add(name.toString().getBytes());
-						} catch (JSONException e) {
-							// TODO Auto-generated catch block
-							list.add(e.toString().getBytes());
-							e.printStackTrace();
-						}
-					}
-					list.add(("------------------------------------------------")
-							.getBytes());
-					list.add(new byte[] { 0x1b, 0x45, 0x01 }); // Set Emphasized
-																// Printing ON
-					list.add(new byte[] { 0x1d, 0x21, 0x11 }); // Width and
-																// Height
-																// Character
-																// Expansion
-																// <GS> ! n
-					list.add((padRight("Total", 8)
-							+ padLeft("$" + jsonobjectHeader.getString("16"), 16) + "\n\n\n\n")
-							.getBytes());
-					list.add(new byte[] { 0x1b, 0x45, 0x00 }); // Set Emphasized
-																// Printing OFF
-																// (same command
-																// as on)
-					list.add(new byte[] { 0x1d, 0x21, 0x00 }); // Cancel
-																// Expansion
-
-//					break outerloop;
-
-				} catch (JSONException e) {
-					// TODO Auto-generated catch block
-					list.add(("e3 " + e.toString()).getBytes());
-					e.printStackTrace();
-				}
-			}
-			if(ProductCount > 1){
-				list.add(("------------------------------------------------")
-						.getBytes());
-				list.add("\n".getBytes());
-				list.add(new byte[] { 0x1b, 0x45, 0x01 }); // Set Emphasized
-																		// Printing ON
-				list.add(new byte[] { 0x1d, 0x21, 0x11 }); // Width and
-															// Height
-															// Character
-															// Expansion
-															// <GS> ! n
-				list.add((padRight("Invoice Total", 13) + padLeft("$"
-						+ InvoiceTotal, 11)).getBytes());
-				list.add(new byte[] { 0x1b, 0x45, 0x00 }); // Set Emphasized
-															// Printing OFF
-															// (same command
-															// as on)
-				list.add(new byte[] { 0x1d, 0x21, 0x00 }); // Cancel Expansion
-				list.add("\n".getBytes());
-			}
-
-			list.add("\n\n".getBytes());
-			list.add(new byte[] { 0x1b, 0x61, 0x01 }); // Center Justification
-			list.add(("------------------Sign Here---------------------\n")
-					.getBytes());
-			// sendCommand(context, portName, portSettings, list);
-
-			list2 = StarPrinter.PrintBitmap(context, portName, portSettings,
+			list = StarPrinter.PrintBitmap(context, portName, portSettings,
 					sigArgs, 576, true, false);
 
-//			list.add(new byte[] { 0x1b, 0x61, 0x01 }); // Center Justification
-			
-			list3.add(new byte[] { 0x1b, 0x61, 0x01 }); // Center Justification
-			outputByteBuffer = ("------------------------------------------------\n")
-					.getBytes();
-			list3.add(outputByteBuffer);
-			list3.add("Thank you for your business!\n\n\n\n\n\n\n\n\n".getBytes());
 
 			al.addAll(list);
-			al.addAll(list2);
-			al.addAll(list3);
 
 			return sendCommand(context, portName, portSettings, al);
 			// return true;
@@ -468,8 +215,6 @@ public class StarPrinter extends CordovaPlugin {
 		ArrayList<byte[]> commands = new ArrayList<byte[]>();
 		;
 
-		Bitmap icon = BitmapFactory.decodeResource(context.getResources(),
-				R.drawable.icon);
 
 		Bitmap bitmap = null;
 		try {
