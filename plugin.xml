@@ -52,7 +52,7 @@
         <source-file src="src/ios/StarBitmap.m" />		
         <header-file src="src/ios/StarPrinter.h" />
         <source-file src="src/ios/StarPrinter.m" />
-
+        <source-file src="src/ios/StarIO.framework"/>
         <source-file src="src/ios/StarIO.framework" framework="true" />
 
 		<framework src="ExternalAccessory.framework" />
