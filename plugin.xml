@@ -25,7 +25,7 @@
     <!-- cordova -->
     <engines>
         <engine name="cordova" version=">=3.0.0" />
-		<engine name="StarIO.framework" version="1.0.0" platform="ios" scriptSrc="src/ios/StarIO.framework"/>
+		<engine name="StarIO.framework" version="1.0" platform="ios" scriptSrc="src/ios/StarIO.framework"/>
     </engines>
     <!-- interface -->
     <js-module src="www/starprinter.js" name="StarPrinter">
@@ -52,10 +52,12 @@
         <source-file src="src/ios/StarBitmap.m" />		
         <header-file src="src/ios/StarPrinter.h" />
         <source-file src="src/ios/StarPrinter.m" />
+        <source-file src="src/ios/StarIO.framework" />
 
 		<framework src="ExternalAccessory.framework" />
         <framework src="CoreBluetooth.framework" />
         <framework src="CoreGraphics.framework" />
+        <framework src="StarIO.framework" />
 
     </platform>
 
