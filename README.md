@@ -21,8 +21,10 @@ To print a sample receipt:
 •	plugin.printer.PrintSampleReceipt();
 
 To print a signature:
-
-•	plugin.printer.PrintSignature($('#sig').signature('toJSON'));
+    
+    var success = function () { alert("Success"); };
+    var error = function (message) { alert("Oopsie! " + message); };
+    plugin.printer.PrintSignature($('#sig').signature('toJSON'), success, error);
 
 •	The json structure of the signature comes form this example.
 
