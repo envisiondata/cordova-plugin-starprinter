@@ -19,6 +19,8 @@ To check the Firmware Version of the printer:
 To print a sample receipt:
 
 •	plugin.printer.PrintSampleReceipt();
+    
+    This will print the 3" sample from the Star Developer Kit.
 
 To print a signature:
     
