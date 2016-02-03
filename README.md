@@ -31,3 +31,8 @@ To print a signature:
 •	The json structure of the signature comes form this example.
 
   o	http://keith-wood.name/signature.html
+
+
+# Important
+
+If you change this plugin, next time you update any plugin your changes will be overwritten. You need to figure out how to disable auto updates.
