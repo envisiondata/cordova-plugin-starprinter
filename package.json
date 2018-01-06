@@ -1,0 +1,36 @@
+{
+  "name": "com.star.printer",
+  "version": "0.0.1",
+  "description": "\r\n        Cordova plugin to print using Star Portable BlueTooth Printer.\r\n    ",
+  "cordova": {
+    "id": "com.star.printer",
+    "platforms": [
+      "ios",
+      "android"
+    ]
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/envisiondata/cordova-plugin-starprinter.git"
+  },
+  "keywords": [
+    "Star Printer",
+    "iOS",
+    "android",
+    "ecosystem:cordova",
+    "cordova-ios",
+    "cordova-android"
+  ],
+  "engines": [
+    {
+      "name": "cordova",
+      "version": ">=3.0.0"
+    }
+  ],
+  "author": "James Vaught",
+  "license": "Apache 2.0",
+  "bugs": {
+    "url": "https://github.com/envisiondata/cordova-plugin-starprinter/issues"
+  },
+  "homepage": "https://github.com/envisiondata/cordova-plugin-starprinter#readme"
+}
