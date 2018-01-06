@@ -6,7 +6,7 @@ Cordova/PhoneGap plugin for the Star Bluetooth printer SM-T300I.
 This plugin follows the Cordova 3.0+ plugin spec, so it can be installed through the Cordova CLI in your existing Cordova project:
 cordova plugin add https://github.com/envisiondata/cordova-plugin-starprinter.git
 
-Yu can also look at this guys plugin. https://github.com/InteractiveObject/StarIOPlugin
+You can also look at this guys plugin. https://github.com/InteractiveObject/StarIOPlugin
 
 # JavaScript Usage
 
