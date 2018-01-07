@@ -25,10 +25,12 @@
     NSString *portSettings_;
     u_int32_t timeout_;
     
-    EAAccessory *_selectedAccessory;
-    EASession *_session;
+    EAAccessory* _selectedAccessory;
+    EASession* _session;
+    
+    NSMutableData *_writeData;
+    NSMutableData *_readData;
 }
-
 @property (readonly, getter = isConnected) BOOL connected;
 @property (readwrite) u_int32_t endCheckedBlockTimeoutMillis;
 
@@ -39,7 +41,7 @@
 - (int32_t)write:(NSData *)data;
 - (NSData *)read:(NSUInteger)bytesToRead;
 - (BOOL)getParsedStatus:(StarPrinterStatus_2 *)starPrinterStatus level:(u_int32_t)level;
-- (BOOL)getParsedStatus:(StarPrinterStatus_2 *)starPrinterStatus level:(u_int32_t)level timeoutSec:(__darwin_time_t)timeoutSec;
+- (BOOL)getParsedStatus:(StarPrinterStatus_2 *)starPrinterStatus level:(u_int32_t)level timeout:(__darwin_time_t)timeoutSec;
 
 /*!
  *  デバイスのファームウェア情報を取得する。取得した情報は、firmwareInformationプロパティに保存される。

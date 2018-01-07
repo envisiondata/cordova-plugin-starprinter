@@ -40,19 +40,13 @@ typedef enum _SMBluetoothSettingCapability {
 @property(retain) NSString *iOSPortName;
 @property(assign) BOOL autoConnect;
 @property(assign) SMBluetoothSecurity security;
-@property(assign) BOOL pairingPermission;
 @property(retain) NSString *pinCode;
-@property(assign) BOOL discoveryPermission;
-@property(assign) BOOL bluetoothDiagnosticMode;
 
 @property(assign, readonly) SMBluetoothSettingCapability deviceNameCapability;
 @property(assign, readonly) SMBluetoothSettingCapability iOSPortNameCapability;
 @property(assign, readonly) SMBluetoothSettingCapability autoConnectCapability;
 @property(assign, readonly) SMBluetoothSettingCapability securityTypeCapability;
-@property(assign, readonly) SMBluetoothSettingCapability pairingPermissionCapability;
 @property(assign, readonly) SMBluetoothSettingCapability pinCodeCapability;
-@property(assign, readonly) SMBluetoothSettingCapability discoveryPermissionCapability;
-@property(assign, readonly) SMBluetoothSettingCapability bluetoothDiagnosticModeCapability;
 
 #pragma mark Public API
 
