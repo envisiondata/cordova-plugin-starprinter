@@ -37,4 +37,4 @@ To print a signature:
 
 # Important
 
-If you change this plugin, next time you update any plugin your changes will be overwritten. You need to figure out how to disable auto updates.
+You should fork this repo, make your changes and link you project to your repo.
